@@ -1,0 +1,53 @@
+#nav_item {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    height: 4vh;
+    border-radius: 7px;
+    transition: background-color 0.2s ease-in-out;
+    padding: 10px;
+    margin-bottom: 2px;
+}
+
+#nav_item:hover {
+    background-color: #bababa;
+    cursor: pointer;
+}
+
+#nav_marker {
+    width: 10px;
+    height: 80%;
+    background-image: linear-gradient(to right, rgb(248, 169, 248), rgb(191, 39, 191));
+    border-radius: 10px;
+    margin-right: 6px;
+    opacity: 0;
+}
+
+#active_nav {
+    text-align: center;
+    align-items: center;
+    justify-items: center;
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+    padding: 5px;
+}
+
+#active_nav i {
+    pointer-events: none;
+}
+
+.active_nav_on {
+    background-color: #bababa;
+}
+
+#nav_item label {
+    pointer-events: none;
+    padding: 10px;
+    font-size: 18px;
+}
+
+.selectedNav {
+    background-color: rgb(165, 165, 165);
+}

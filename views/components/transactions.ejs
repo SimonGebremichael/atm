@@ -1,0 +1,29 @@
+<div id="transactions">
+
+    <%- include('transactions_filter'); %>
+
+    <!-- data list stored -->
+    <input type="hidden" value="<%= JSON.stringify(data) %>" id="doit"/> 
+    
+    <table>
+        <thead>
+            <th>Date</th>
+            <th>ATM ID</th>
+            <th>Customer PAN</th>
+            <th>Description</th>
+            <th>
+                <div id="search_container">
+                    <p>Code</p>
+                    <input type="search" id="search_t_results" placeholder="Search in results"/>
+                </div> 
+            </th>
+        </thead>
+        <tbody id="prnt_data">
+            <!-- transactions print here -->
+        </tbody>
+    </table>
+</div>
+
+<style>
+    @import url("../style/tranactions.css");
+</style>

@@ -1,0 +1,142 @@
+#transactions {
+    padding-left: 10px;
+}
+
+#t_header {
+    display: flex;
+    height: 5vh;
+    align-items: center;
+}
+
+#t_header label {
+    font-size: 23px;
+    padding-bottom: 15px;
+    margin-top: 10px;
+    width: 74%;
+}
+
+#t_header_controls {
+    width: 25%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+#t_header_controls button {
+    display: inline-block;
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 16px;
+    background-color: white;
+    border: 1px solid gray;
+    width: 90%;
+    transition: background-color 0.3s ease-in-out;
+}
+
+#t_header_controls button:hover {
+    cursor: pointer;
+    background-color: lightslategray;
+}
+
+#t_controls {
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    margin-top: 5vh;
+}
+
+#t_controls input, #t_controls select, #t_controls option {
+    border: 1px solid gray;
+    border-radius: 4px;
+    padding: 8px;
+    width: 90% !important;
+}
+
+#t_controls label {
+    font-weight: bold;
+    font-size: 12px;
+}
+
+#t_dates {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+/* --------------- table data ------------ */
+
+table {
+    width: 100%;
+    background-color: white;
+    border-radius: 7px;
+    border-collapse: collapse;
+    margin-top: 4vh;
+    border: 2px solid lightgray;
+}
+
+table thead {
+    border-radius: 7px;
+}
+
+table th {
+    padding: 8px;
+    font-size: 18px;
+    text-align: left;
+    background-color: #eeeeee;
+    border-bottom: 2px solid rgb(204, 204, 204);
+    font-weight: normal;
+}
+
+table th input {
+    padding: 8px;
+    border: 1px solid gray;
+    border-radius: 6px;
+}
+
+table tr {
+    border-bottom: 2px solid rgb(204, 204, 204);
+}
+
+table tr:hover {
+    background-color: rgb(241, 233, 233);
+    cursor: pointer;
+}
+
+table td {
+    padding: 12px;
+    font-size: 18px;
+    border: none;
+    vertical-align: top;
+}
+
+table td p {
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+#t_desrc {
+    display: flex;
+    border-radius: 7px;
+    align-items: center;
+}
+
+#t_desrc i {
+    color: red;
+    margin-right: 6px;
+}
+
+.t_alert {
+    background-color: pink;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+#t_desrc p {
+    display: flex;
+    align-items: center;
+    padding-top: 7px;
+    width: 50%;
+}
+
+#search_container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    text-align: center;
+}

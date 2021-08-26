@@ -1,0 +1,61 @@
+
+<div id="t_header">
+    <label>All Transactions</label>
+    <div id="t_header_controls">
+        <button id="data_print_btn">Print</button>
+        <button id="data_exp_btn">Export</button>
+    </div>
+</div>
+<div id="t_controls">
+    <!-- DATE -->
+    <div>
+        <label>DATE</label><br />
+        <div id="t_dates">
+            <input type="date" id="date1"/>
+            <input type="date" id="date2"/>
+            <input type="hidden" value="<%= query.date0 %>" id="stor_date_0"/> 
+            <input type="hidden" value="<%= query.date1 %>" id="stor_date_1"/> 
+        </div>
+    </div>
+    <!-- ATM ID -->
+    <div> 
+        <label>ATM ID</label><br />
+        <select id="atm_val">
+            <option value="0" <% if(query.atmId == 0) { %> selected <% } %>>All ATMS</option>
+            <%  atm_list.forEach(item => { %>
+                <option 
+                    value="<%= item.id %>" 
+                    <% if(item.id == query.atmId) { %> selected <% } %>
+                    >
+                    <%= item.name %>
+                </option>
+            <% }); %>
+        </select>
+    </div>
+    <!-- CUSTOMER PAN NUMBER -->
+    <div>
+        <label>CUSTOMER PAN NUMBER</label><br />
+        <input value="<%= query.pan %>" type="text" id="pan" placeholder="Partial or full card number"/>
+    </div>
+
+    <!-- EMV CHIP AID -->
+    <div>
+        <label>EMV CHIP AID</label><br />
+        <select id="aid_val" <% if(query.aidId == 0) { %> selected <% } %>>
+            <option value="10">All APPLICATIONS</option>
+            <%  aid_list.forEach(item => { %>
+                <option 
+                    value="<%= item.id %>" 
+                    <% if(item.id == query.aidId) { %> selected <% } %>
+                    >
+                    <%= item.name %>
+                </option>
+            <% }); %>
+        </select>
+    </div>
+    <!-- TRANSACTION SERIAL NUMBER -->
+    <div>
+        <label>TRANSACTION SERIAL NUMBER</label><br />
+        <input value="<%= query.txnSerial %>" type="number" id="tsn" placeholder="4 digit number" onblur="getTraansactions()"/>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+<div id="navigation">
+
+    <% view.nav.forEach(element => { %>
+        <% function isSelected() { 
+                return (view.selected.toLowerCase() == element.value.toLowerCase()) == true; 
+            } 
+        %>
+        <div id="nav_item" 
+        <% if(isSelected()) {%> class="selectedNav" <% } %>
+        onClick="navigate('<%= element.value %>')">
+            <div <% if(isSelected()) {%> style="opacity: 1;" <% } %> id="nav_marker"></div>
+            <div <% if(isSelected()) {%> class="active_nav_on" <% } %> id="active_nav">
+                <i class="<%= element.icon %> fa-2x"></i>
+            </div>
+            <label><%= element.name %></label>
+        </div>
+    <% }); %>
+
+</div>
+
+<style>
+    @import url("../style/navigation.css");
+</style>
