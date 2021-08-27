@@ -5,36 +5,8 @@ window.onload = () => {
 };
 
 function navigate(path) {
+  document.getElementById("nav_title_" + path).innerText = "Loading...";
   window.location = "/dashboard/" + path;
-}
-
-function getTraansactions() {
-  var d0 = document.getElementById("date1").value;
-  var d1 = document.getElementById("date2").value;
-  alert(d0 + ", " + d1);
-
-  alert(
-    "D0: " + formate_date(d0, true, "") + " D1: " + formate_date(d1, true, "")
-  );
-
-  // var aid = document.getElementById("aid_val").value;
-  // var serialNum = document.getElementById("tsn").value;
-  // var data = {
-  //     date0: 20201105,
-  //     date1: 20201105,
-  //     atm: parseInt(document.getElementById("atm_val").value),
-  //     aid: parseInt(aid),
-  //     pan: document.getElementById("pan").value,
-  //     serialNum: serialNum,
-  //   },
-  //   query = Object.entries(data)
-  //     .map(([key, val]) => `${key}=${val}`)
-  //     .join("&");
-  // console.log(data);
-  // console.log(query);
-
-  // alert(query);
-  // window.location = "/dashboard/transactions?" + query;
 }
 
 //formating dates for display or db requests
@@ -44,7 +16,9 @@ function formate_date(d, sendable_type, seperate) {
     var y = d.toString().substring(0, 4);
     var m = d.toString().substring(4, 6);
     var d = d.toString().substring(6, 8);
-    return y + seperate + m + seperate + d;
+
+    if (seperate == "-") return y + seperate + m + seperate + d;
+    else return m + seperate + d + seperate + y;
   }
 }
 
@@ -65,25 +39,62 @@ function _listeners() {
   );
 
   //get transactions when filters change
-  // d.getElementById("date1").addEventListener("change", () => getTraansactions());
-  // d.getElementById("date2").addEventListener("change", () => getTraansactions());
-  // d.getElementById("atm_val").addEventListener("change", () => getTraansactions());
-  // d.getElementById("pan").addEventListener("blur", () => getTraansactions());
-  // d.getElementById("aid_val").addEventListener("change", () => getTraansactions());
-  // d.getElementById("tsn").addEventListener("blur", () => getTraansactions());
+  d.getElementById("date1").addEventListener("change", getTraansactions);
+  d.getElementById("date2").addEventListener("change", getTraansactions);
+  d.getElementById("atm_val").addEventListener("change", getTraansactions);
+  d.getElementById("pan").addEventListener("blur", getTraansactions);
+  d.getElementById("aid_val").addEventListener("change", getTraansactions);
+  d.getElementById("tsn").addEventListener("blur", getTraansactions);
 
   //'not implemented' popup window. Print & Export
-  d.getElementById("data_print_btn").addEventListener("click", open_popup);
-  d.getElementById("data_exp_btn").addEventListener("click", open_popup);
-  function open_popup() {
+  d.getElementById("data_print_btn").addEventListener("click", () =>
+    open_popup("Print")
+  );
+  d.getElementById("data_exp_btn").addEventListener("click", () =>
+    open_popup("Export")
+  );
+  function open_popup(text) {
+    d.getElementById("pop_text").innerText = text + " Not Implemented";
     d.getElementById("popup").style.display = "block";
+    d.getElementById("popup").style.display = "block";
+    d.getElementById("main").style.filter = "blur(2px)";
+    d.getElementsByTagName("header")[0].style.filter = "blur(2px)";
   }
 
   //close popup window
-  d.getElementById("pop_bg").addEventListener(
-    "click",
-    () => (d.getElementById("popup").style.display = "none")
-  );
+  d.getElementById("pop_bg").addEventListener("click", () => {
+    d.getElementById("popup").style.display = "none";
+    d.getElementById("main").style.filter = "none";
+    d.getElementsByTagName("header")[0].style.filter = "none";
+  });
+}
+
+function getTraansactions() {
+  var d0 = document.getElementById("date1").value;
+  var d1 = document.getElementById("date2").value;
+  var atm = document.getElementById("atm_val").value;
+  var aid = document.getElementById("aid_val").value;
+  var pan = document.getElementById("pan").value;
+  var tsn = document.getElementById("tsn").value;
+
+  if (atm == "0") atm = null;
+  if (aid == "0") aid = null;
+  if (pan == "") pan = null;
+  if (tsn == "") tsn = null;
+
+  var data = {
+      date0: formate_date(d0, true, ""),
+      date1: formate_date(d1, true, ""),
+      atmId: atm,
+      aidId: aid,
+      pan: pan,
+      txnSerial: tsn,
+    },
+    query = Object.entries(data)
+      .map(([key, val]) => `${key}=${val}`)
+      .join("&");
+
+  window.location = "/dashboard/transactions?" + query;
 }
 
 function populate_transactions(match) {
@@ -146,10 +157,7 @@ function populate_transactions(match) {
 
 function test(text_arr, match) {
   for (var i = 0; i < text_arr.length; i++)
-    if (text_arr[i].toLowerCase().search(match.toLowerCase()) >= 0) {
-      console.log(
-        "text: " + text_arr[i] + ", match: " + match + ", pass: " + true
-      );
+    if (text_arr[i].toLowerCase().search(match.toLowerCase()) != -1) {
       return true;
     }
 }

@@ -4,15 +4,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<%= dir_path %>style/global.css" />
+    <link rel="stylesheet" href="<%= dir_path %>style/animate.min.css" />
     <link rel="stylesheet" href="<%= dir_path %>style/view_width.css" />
     <link rel="shortcut ico" type="image/x-icon" href="/views/favicon.ico">
     <script src="<%= dir_path %>functions/icons.js" defer></script>
-    <script src="<%= dir_path %>main.js" defer></script>
+    <script src="<%= dir_path %>functions/main.js" defer></script>
     <title><%= view.selected %> | MMGSC </title>
 </head>
 <body onload="grabData('<%= data %>')">
     <%- include('components/sections/popup'); %>
-    <%- include('components/header'); %>
+    <%- include('components/sections/header'); %>
     <div id="main">
         <%- include('components/navigation'); %>
         <%- include('components/' + view.page); %>

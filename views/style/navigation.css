@@ -1,11 +1,12 @@
+#navigation {
+    width: 95%;
+}
+
 #nav_item {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    height: 4vh;
+    display: grid;
+    grid-template-columns: 5% 95%;
     border-radius: 7px;
     transition: background-color 0.2s ease-in-out;
-    padding: 10px;
     margin-bottom: 2px;
 }
 
@@ -14,12 +15,18 @@
     cursor: pointer;
 }
 
+#nav_details {
+    padding: 10px 10px 10px 0px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
 #nav_marker {
     width: 10px;
-    height: 80%;
+    height: 100%;
     background-image: linear-gradient(to right, rgb(248, 169, 248), rgb(191, 39, 191));
     border-radius: 10px;
-    margin-right: 6px;
     opacity: 0;
 }
 
@@ -28,10 +35,9 @@
     align-items: center;
     justify-items: center;
     border-radius: 5px;
-    width: 30px;
-    height: 30px;
     margin-right: 5px;
     padding: 5px;
+    width: 40px;
 }
 
 #active_nav i {
@@ -49,5 +55,5 @@
 }
 
 .selectedNav {
-    background-color: rgb(165, 165, 165);
+    background-color: rgb(213, 213, 213);
 }

@@ -9,10 +9,12 @@
         <% if(isSelected()) {%> class="selectedNav" <% } %>
         onClick="navigate('<%= element.value %>')">
             <div <% if(isSelected()) {%> style="opacity: 1;" <% } %> id="nav_marker"></div>
-            <div <% if(isSelected()) {%> class="active_nav_on" <% } %> id="active_nav">
-                <i class="<%= element.icon %> fa-2x"></i>
+            <div id="nav_details">
+                <div <% if(isSelected()) {%> class="active_nav_on" <% } %> id="active_nav">
+                    <i class="<%= element.icon %> fa-2x"></i>
+                </div>
+                <label id="nav_title_<%= element.value %>"><%= element.name %></label>
             </div>
-            <label><%= element.name %></label>
         </div>
     <% }); %>
 

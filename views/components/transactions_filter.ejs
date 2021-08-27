@@ -21,7 +21,7 @@
     <div> 
         <label>ATM ID</label><br />
         <select id="atm_val">
-            <option value="0" <% if(query.atmId == 0) { %> selected <% } %>>All ATMS</option>
+            <option value="0" <% if(query.atmId == "0") { %> selected <% } %>>All ATMS</option>
             <%  atm_list.forEach(item => { %>
                 <option 
                     value="<%= item.id %>" 
@@ -41,12 +41,13 @@
     <!-- EMV CHIP AID -->
     <div>
         <label>EMV CHIP AID</label><br />
-        <select id="aid_val" <% if(query.aidId == 0) { %> selected <% } %>>
-            <option value="10">All APPLICATIONS</option>
+        <select id="aid_val" <% if(query.aidId == "0") { %> selected <% } %>>
+            <option value="0">All APPLICATIONS</option>
             <%  aid_list.forEach(item => { %>
                 <option 
                     value="<%= item.id %>" 
                     <% if(item.id == query.aidId) { %> selected <% } %>
+                    title="<%= item.descr %>"
                     >
                     <%= item.name %>
                 </option>
@@ -56,6 +57,6 @@
     <!-- TRANSACTION SERIAL NUMBER -->
     <div>
         <label>TRANSACTION SERIAL NUMBER</label><br />
-        <input value="<%= query.txnSerial %>" type="number" id="tsn" placeholder="4 digit number" onblur="getTraansactions()"/>
+        <input value="<%= query.txnSerial %>" type="text" id="tsn" placeholder="4 digit number"/>
     </div>
 </div>

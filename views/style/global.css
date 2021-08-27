@@ -1,5 +1,5 @@
 body {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     padding-bottom: 100px;
 }
 
@@ -10,13 +10,40 @@ body {
 
 header {
     display: flex;
-    height: 10vh;
+    min-height: 7vh;
     align-items: center;
+    box-shadow: 0 3px 20px rgb(216, 216, 216);
+}
+
+header div {
+    background-color: #bebbb3;
+}
+
+header #user_cont {
+    width: 5vh;
+    height: 5vh;
+    border-radius: 10px;
+    margin-left: 3vw;
+}
+
+header #page_title {
+    width: 17vh;
+    height: 1.5vh;
+    border-radius: 10px;
+    margin-left: 1vw;
+}
+
+header #options_item {
+    width: 4vh;
+    height: 4vh;
+    border-radius: 50%;
+    margin-left: 79vw;
 }
 
 #main {
     display: grid;
     grid-template-columns: 25% 75%;
     width: 90%;
-    margin: auto;
+    margin-left: 2%;
+    margin-top: 5vh;
 }

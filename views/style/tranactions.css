@@ -12,7 +12,7 @@
     font-size: 23px;
     padding-bottom: 15px;
     margin-top: 10px;
-    width: 74%;
+    width: 75%;
 }
 
 #t_header_controls {
@@ -29,6 +29,7 @@
     background-color: white;
     border: 1px solid gray;
     width: 90%;
+    margin-left: 10%;
     transition: background-color 0.3s ease-in-out;
 }
 
@@ -108,7 +109,7 @@ table td {
 
 table td p {
     align-items: center;
-    padding-bottom: 10px;
+    padding-bottom: 7px;
 }
 
 #t_desrc {
@@ -131,7 +132,7 @@ table td p {
 #t_desrc p {
     display: flex;
     align-items: center;
-    padding-top: 7px;
+    padding-top: 4px;
     width: 50%;
 }
 
