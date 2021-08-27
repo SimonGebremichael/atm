@@ -1,12 +1,12 @@
 # ATM Transactions web portal
 
-## how to install view locally
+## how to install locally
 
 - npm i --save
 - npm run start or node app.js
 - open new tab at localhost:3001
 
-## or view online #2
+## View online
 
 - https://simonatm.herokuapp.com/
 
