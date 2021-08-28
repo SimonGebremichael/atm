@@ -1,6 +1,9 @@
+var db = [];
+
 window.onload = () => {
   set_dates();
   _listeners();
+  init();
   populate_transactions("");
 };
 
@@ -70,12 +73,13 @@ function _listeners() {
 }
 
 function getTraansactions() {
-  var d0 = document.getElementById("date1").value;
-  var d1 = document.getElementById("date2").value;
-  var atm = document.getElementById("atm_val").value;
-  var aid = document.getElementById("aid_val").value;
-  var pan = document.getElementById("pan").value;
-  var tsn = document.getElementById("tsn").value;
+  var d = document;
+  var d0 = d.getElementById("date1").value;
+  var d1 = d.getElementById("date2").value;
+  var atm = d.getElementById("atm_val").value;
+  var aid = d.getElementById("aid_val").value;
+  var pan = d.getElementById("pan").value;
+  var tsn = d.getElementById("tsn").value;
 
   if (atm == "0") atm = null;
   if (aid == "0") aid = null;
@@ -97,13 +101,18 @@ function getTraansactions() {
   window.location = "/dashboard/transactions?" + query;
 }
 
+//stores db locally, to filter in search
+function init() {
+  db = JSON.parse(document.getElementById("doit").value);
+  console.log("%cData:", "blackground-color: tomato; font-weight: bold: ");
+  console.log(db);
+}
+
 function populate_transactions(match) {
-  var data = JSON.parse(document.getElementById("doit").value);
   var box = document.getElementById("prnt_data");
   box.innerHTML = "";
-  console.log(data);
 
-  data.forEach((element) => {
+  db.forEach((element) => {
     var double_check = [];
 
     var cont = document.createElement("tr");
