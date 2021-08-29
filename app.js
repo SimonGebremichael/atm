@@ -33,7 +33,6 @@ app.use("/", (req, res) => {
 
 function start(req, res) {
   var view = navigate_view(req.params.view);
-
   // generate data for transaction page
   if (view.page == "transactions") {
     //default transaction filters

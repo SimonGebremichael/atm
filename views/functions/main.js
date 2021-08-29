@@ -1,7 +1,8 @@
 var db = (AID_list = []);
 
 window.onload = () => {
-  if (window.location.href.search("transactions") != -1) {
+  var url = new URL(window.location.href).pathname;
+  if (url.search("transactions") != -1 || url == "/") {
     set_dates();
     _listeners();
     init();
