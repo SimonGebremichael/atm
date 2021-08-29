@@ -29,7 +29,7 @@
     }
     #t_controls {
         display: flex !important;
-        flex-wrap: nowrap !important;
+        flex-wrap: wrap !important;
     }
     #t_controls input {
         width: 200px !important;

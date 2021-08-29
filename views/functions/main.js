@@ -128,7 +128,7 @@ function populate_transactions(match) {
 
     var cont = document.createElement("tr");
     cont.class = "t_row";
-    cont.title = findAID(element.aid);
+    cont.title = add_AID_title(element.aid);
 
     var date = document.createElement("td");
     var dd = formate_date(element.devTime, false, "/");
@@ -201,7 +201,7 @@ function test(text_arr, match) {
 }
 
 //add title to tr item
-function findAID(aid) {
+function add_AID_title(aid) {
   for (var i = 0; i < AID_list.length; i++)
     if (AID_list[i].id == aid)
       return (
