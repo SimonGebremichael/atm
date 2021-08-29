@@ -47,3 +47,12 @@ header #options_item {
     margin-left: 2%;
     margin-top: 5vh;
 }
+
+#maintainance i {
+    color: rgb(164, 162, 162);
+    animation: fadeIn 1s;
+}
+
+#maintainance label {
+    font-size: 20px;
+}

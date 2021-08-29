@@ -20,11 +20,11 @@ app.use((req, res, next) => {
   next();
 });
 
-//page navi intersection
-app.use("/dashboard/:view", async (req, res) => start(req, res));
+//page navigation intersection
+app.use("/dashboard/:view", (req, res) => start(req, res));
 
 //by default redirects to transaction page
-app.use("/", (req, res, next) => {
+app.use("/", (req, res) => {
   req.params = {
     view: "transactions",
   };
@@ -33,6 +33,7 @@ app.use("/", (req, res, next) => {
 
 function start(req, res) {
   var view = navigate_view(req.params.view);
+
   // generate data for transaction page
   if (view.page == "transactions") {
     //default transaction filters
@@ -123,7 +124,7 @@ function draw(res, atms, aids, data, query, view) {
   });
 }
 
-//page user is viewing
+//navigation
 function navigate_view(text) {
   var nav = [
     {
@@ -153,6 +154,8 @@ function navigate_view(text) {
     },
   ];
   var view = text;
+
+  //find nav page with text
   var f = false;
   nav.forEach((element) => {
     if (element.value == text) {
@@ -161,8 +164,10 @@ function navigate_view(text) {
     }
   });
 
+  //not in nav list, show 404
   if (!f) view = "sections/404";
 
+  //view obj in render
   return {
     page: view,
     selected: text,

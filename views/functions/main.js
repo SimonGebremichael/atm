@@ -1,15 +1,25 @@
-var db = [];
+var db = (AID_list = []);
 
 window.onload = () => {
-  set_dates();
-  _listeners();
-  init();
-  populate_transactions("");
+  if (window.location.href.search("transactions") != -1) {
+    set_dates();
+    _listeners();
+    init();
+    populate_transactions("");
+  }
 };
 
+//switch pages
 function navigate(path) {
   document.getElementById("nav_title_" + path).innerText = "Loading...";
   window.location = "/dashboard/" + path;
+}
+
+//stores db locally, to filter in search
+function init() {
+  db = JSON.parse(document.getElementById("data_list_storage").value);
+  AID_list = JSON.parse(document.getElementById("aid_list_storage").value);
+  console.log(db);
 }
 
 //formating dates for display or db requests
@@ -79,55 +89,58 @@ function getTraansactions() {
   var atm = d.getElementById("atm_val").value;
   var aid = d.getElementById("aid_val").value;
   var pan = d.getElementById("pan").value;
-  var tsn = d.getElementById("tsn").value;
+  var tsn = d.getElementById("tsn").value.replace(/\D/g, "");
 
   if (atm == "0") atm = null;
   if (aid == "0") aid = null;
   if (pan == "") pan = null;
   if (tsn == "") tsn = null;
 
-  var data = {
-      date0: formate_date(d0, true, ""),
-      date1: formate_date(d1, true, ""),
-      atmId: atm,
-      aidId: aid,
-      pan: pan,
-      txnSerial: tsn,
-    },
-    query = Object.entries(data)
-      .map(([key, val]) => `${key}=${val}`)
-      .join("&");
+  if (d0 != "" && d1 != "") {
+    var data = {
+        date0: formate_date(d0, true, ""),
+        date1: formate_date(d1, true, ""),
+        atmId: atm,
+        aidId: aid,
+        pan: pan,
+        txnSerial: tsn,
+      },
+      query = Object.entries(data)
+        .map(([key, val]) => `${key}=${val}`)
+        .join("&");
 
-  window.location = "/dashboard/transactions?" + query;
-}
-
-//stores db locally, to filter in search
-function init() {
-  db = JSON.parse(document.getElementById("doit").value);
-  console.log("%cData:", "blackground-color: tomato; font-weight: bold: ");
-  console.log(db);
+    d.getElementById("t_controls").style.display = "none";
+    d.getElementById("t_loading").style.display = "flex";
+    window.location = "/dashboard/transactions?" + query;
+  } else d.getElementById("t_dates").style.border = "2px solid red";
 }
 
 function populate_transactions(match) {
   var box = document.getElementById("prnt_data");
   box.innerHTML = "";
 
+  var emptyPrint = document.getElementById("prnt_empty");
+  emptyPrint.innerHTML = "";
+
   db.forEach((element) => {
-    var double_check = [];
+    var filter_arr = [];
 
     var cont = document.createElement("tr");
     cont.class = "t_row";
+    cont.title = findAID(element.aid);
 
     var date = document.createElement("td");
-    date.innerText = formate_date(element.devTime, false, "/");
+    var dd = formate_date(element.devTime, false, "/");
+    date.innerText = dd;
+    filter_arr.push(dd);
 
     var atm = document.createElement("td");
     atm.innerText = element.atmName;
-    double_check.push(element.atmName.toString());
+    filter_arr.push(element.atmName.toString());
 
     var pan = document.createElement("td");
     pan.innerText = element.pan;
-    double_check.push(element.pan.toString());
+    filter_arr.push(element.pan.toString());
 
     var des = document.createElement("td");
     des.colSpan = "2";
@@ -143,11 +156,14 @@ function populate_transactions(match) {
         p1.innerHTML += '<i class="fas fa-exclamation-circle fa-2x">';
       }
 
-      p1.innerHTML += item.descr;
-      p2.innerText = item.code;
-
-      if (item.descr != undefined) double_check.push(item.descr.toString());
-      if (item.code != undefined) double_check.push(item.code.toString());
+      if (item.descr != undefined) {
+        p1.innerHTML += item.descr;
+        filter_arr.push(item.descr.toString());
+      }
+      if (item.code != undefined) {
+        p2.innerText = item.code;
+        filter_arr.push(item.code.toString());
+      }
 
       row.appendChild(p1);
       row.appendChild(p2);
@@ -160,13 +176,40 @@ function populate_transactions(match) {
     cont.appendChild(des);
 
     //show if item contains 'match' text
-    if (test(double_check, match) == true) box.appendChild(cont);
+    if (test(filter_arr, match)) box.appendChild(cont);
   });
+
+  //empty results animation
+  if (box.childElementCount <= 0) {
+    var i = document.createElement("i");
+    i.className = "far fa-folder-open fa-5x";
+
+    var p = document.createElement("p");
+    p.innerHTML = "<br /><br />No Results to be found";
+
+    emptyPrint.appendChild(i);
+    emptyPrint.appendChild(p);
+  }
 }
 
+//filter via containing text
 function test(text_arr, match) {
   for (var i = 0; i < text_arr.length; i++)
-    if (text_arr[i].toLowerCase().search(match.toLowerCase()) != -1) {
+    if (text_arr[i].toLowerCase().search(match.toLowerCase()) != -1)
       return true;
-    }
+}
+
+//add title to tr item
+function findAID(aid) {
+  for (var i = 0; i < AID_list.length; i++)
+    if (AID_list[i].id == aid)
+      return (
+        AID_list[i].descr +
+        ": Vendor: #" +
+        AID_list[i].vendor +
+        ": Country: " +
+        AID_list[i].country
+      );
+
+  return "";
 }

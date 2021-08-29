@@ -3,7 +3,10 @@
     <%- include('transactions_filter'); %>
 
     <!-- data list stored -->
-    <input type="hidden" value="<%= JSON.stringify(data) %>" id="doit"/> 
+    <input type="hidden" value="<%= JSON.stringify(data) %>" id="data_list_storage"/> 
+
+    <!-- AID list stored -->
+    <input type="hidden" value="<%= JSON.stringify(aid_list) %>" id="aid_list_storage"/> 
     
     <table>
         <thead>
@@ -14,7 +17,10 @@
             <th>
                 <div id="search_container">
                     <p>Code</p>
-                    <input type="search" id="search_t_results" placeholder="Search in results"/>
+                    <div id="search_box">
+                        <i class="fas fa-search"></i>
+                        <input type="search" id="search_t_results" placeholder="Search in results"/>
+                    </div>
                 </div> 
             </th>
         </thead>
@@ -22,6 +28,8 @@
             <!-- transactions td prints here -->
         </tbody>
     </table>
+
+    <p id="prnt_empty"></p>
 </div>
 
 <style>

@@ -6,22 +6,27 @@
         <button id="data_exp_btn">Export</button>
     </div>
 </div>
+
+
 <div id="t_controls">
+    
     <!-- DATE -->
     <div>
         <label>DATE</label><br />
         <div id="t_dates">
-            <input type="date" id="date1"/>
+            <input type="date" id="date1"/>-&nbsp;&nbsp;
             <input type="date" id="date2"/>
+            <i class="far fa-calendar-alt"></i>
             <input type="hidden" value="<%= query.date0 %>" id="stor_date_0"/> 
             <input type="hidden" value="<%= query.date1 %>" id="stor_date_1"/> 
         </div>
     </div>
+
     <!-- ATM ID -->
     <div> 
         <label>ATM ID</label><br />
         <select id="atm_val">
-            <option value="0" <% if(query.atmId == "0") { %> selected <% } %>>All ATMS</option>
+            <option value="0">All ATMS</option>
             <%  atm_list.forEach(item => { %>
                 <option 
                     value="<%= item.id %>" 
@@ -32,6 +37,7 @@
             <% }); %>
         </select>
     </div>
+
     <!-- CUSTOMER PAN NUMBER -->
     <div>
         <label>CUSTOMER PAN NUMBER</label><br />
@@ -41,7 +47,7 @@
     <!-- EMV CHIP AID -->
     <div>
         <label>EMV CHIP AID</label><br />
-        <select id="aid_val" <% if(query.aidId == "0") { %> selected <% } %>>
+        <select id="aid_val">
             <option value="0">All APPLICATIONS</option>
             <%  aid_list.forEach(item => { %>
                 <option 
@@ -54,9 +60,14 @@
             <% }); %>
         </select>
     </div>
+
     <!-- TRANSACTION SERIAL NUMBER -->
     <div>
         <label>TRANSACTION SERIAL NUMBER</label><br />
         <input value="<%= query.txnSerial %>" type="text" id="tsn" placeholder="4 digit number"/>
     </div>
+</div>
+
+<div id="t_loading">
+    <center><h2>Loading...</h2></center>
 </div>
