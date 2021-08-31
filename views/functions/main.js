@@ -86,23 +86,15 @@ function getTraansactions() {
   var d = document;
   var d0 = d.getElementById("date1").value;
   var d1 = d.getElementById("date2").value;
-  // var atm = d.getElementById("atm_val").value;
-  // var aid = d.getElementById("aid_val").value;
-  // var pan = d.getElementById("pan").value;
-  // var tsn = d.getElementById("tsn").value.replace(/\D/g, "");
-  var hold = [
-    d.getElementById("atm_val").value,
-    d.getElementById("aid_val").value,
-    d.getElementById("pan").value,
-    d.getElementById("tsn").value.replace(/\D/g, ""),
-  ];
-  hold.forEach((e) => {
-    if (e == "0" || e == "") e = null;
-  });
-  // if (atm == "0") atm = null;
-  // if (aid == "0") aid = null;
-  // if (pan == "") pan = null;
-  // if (tsn == "") tsn = null;
+  var atm = d.getElementById("atm_val").value;
+  var aid = d.getElementById("aid_val").value;
+  var pan = d.getElementById("pan").value;
+  var tsn = d.getElementById("tsn").value.replace(/\D/g, "");
+
+  if (atm == "0") atm = null;
+  if (aid == "0") aid = null;
+  if (pan == "") pan = null;
+  if (tsn == "") tsn = null;
 
   if (d0 != "" && d1 != "") {
     var data = {
