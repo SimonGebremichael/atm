@@ -100,10 +100,10 @@ function getTraansactions() {
     var data = {
         date0: formate_date(d0, true, ""),
         date1: formate_date(d1, true, ""),
-        atmId: hold[0],
-        aidId: hold[1],
-        pan: hold[2],
-        txnSerial: hold[3],
+        atmId: atm,
+        aidId: aid,
+        pan: pan,
+        txnSerial: tsn,
       },
       query = Object.entries(data)
         .map(([key, val]) => `${key}=${val}`)
