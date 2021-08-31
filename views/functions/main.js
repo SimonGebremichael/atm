@@ -1,8 +1,7 @@
 var db = (AID_list = []);
 
 window.onload = () => {
-  var url = new URL(window.location.href).pathname;
-  if (url.search("transactions") != -1 || url == "/") {
+  if (document.getElementById("page").value == "transactions") {
     set_dates();
     _listeners();
     init();
@@ -87,24 +86,32 @@ function getTraansactions() {
   var d = document;
   var d0 = d.getElementById("date1").value;
   var d1 = d.getElementById("date2").value;
-  var atm = d.getElementById("atm_val").value;
-  var aid = d.getElementById("aid_val").value;
-  var pan = d.getElementById("pan").value;
-  var tsn = d.getElementById("tsn").value.replace(/\D/g, "");
-
-  if (atm == "0") atm = null;
-  if (aid == "0") aid = null;
-  if (pan == "") pan = null;
-  if (tsn == "") tsn = null;
+  // var atm = d.getElementById("atm_val").value;
+  // var aid = d.getElementById("aid_val").value;
+  // var pan = d.getElementById("pan").value;
+  // var tsn = d.getElementById("tsn").value.replace(/\D/g, "");
+  var hold = [
+    d.getElementById("atm_val").value,
+    d.getElementById("aid_val").value,
+    d.getElementById("pan").value,
+    d.getElementById("tsn").value.replace(/\D/g, ""),
+  ];
+  hold.forEach((e) => {
+    if (e == "0" || e == "") e = null;
+  });
+  // if (atm == "0") atm = null;
+  // if (aid == "0") aid = null;
+  // if (pan == "") pan = null;
+  // if (tsn == "") tsn = null;
 
   if (d0 != "" && d1 != "") {
     var data = {
         date0: formate_date(d0, true, ""),
         date1: formate_date(d1, true, ""),
-        atmId: atm,
-        aidId: aid,
-        pan: pan,
-        txnSerial: tsn,
+        atmId: hold[0],
+        aidId: hold[1],
+        pan: hold[2],
+        txnSerial: hold[3],
       },
       query = Object.entries(data)
         .map(([key, val]) => `${key}=${val}`)

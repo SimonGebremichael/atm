@@ -1,5 +1,6 @@
-<div id="navigation">
+<input type="hidden" value="<%=view.selected%>" id="page"/>
 
+<div id="navigation">
     <% view.nav.forEach(element => { %>
         <% function isSelected() { 
                 return (view.selected.toLowerCase() == element.value.toLowerCase()) == true; 
@@ -17,7 +18,6 @@
             </div>
         </div>
     <% }); %>
-
 </div>
 
 <style>
