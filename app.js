@@ -4,6 +4,11 @@ var fetch = require("node-fetch");
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var app = express();
 
+var ATM_arr = [];
+var AID_arr = [];
+var query = {};
+var view = {};
+
 //rendering EJS files
 app.use(express.static(__dirname + "/views"));
 app.set("views", path.join(__dirname, "views"));
@@ -32,7 +37,7 @@ app.use("/", (req, res) => {
 });
 
 function start(req, res) {
-  var view = navigate_view(req.params.view);
+  view = navigate_view(req.params.view);
   // generate data for transaction page
   if (view.page == "transactions") {
     //default transaction filters
@@ -45,36 +50,39 @@ function start(req, res) {
         pan: null,
         txnSerial: null,
       };
-    getATMList(req, res, view);
-  } else draw(res, [], [], [], {}, view);
+    getATMList(req, res);
+  } else draw(res, [], [], [], {});
 }
 
 //get ATM list
-function getATMList(req, res, view) {
-  fetch("https://dev.cjpf4.net/um/api/jr/txn/atmlist/v1", {
-    method: "GET",
-  })
-    .then((res) => res.json())
-    .then((json) => getAIDList(req, res, json, view));
+function getATMList(req, res) {
+  if (ATM_arr.length == 0)
+    fetch("https://dev.cjpf4.net/um/api/jr/txn/atmlist/v1", {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        ATM_arr = json;
+        getAIDList(req, res);
+      });
+  else getAIDList(req, res);
 }
 
 //get AID list
-function getAIDList(req, res, atm_list, view) {
-  //show AID items with an existenting name
-  function fltr(item) {
-    return item.name != null;
-  }
-
-  fetch("https://dev.cjpf4.net/um/api/jr/txn/aidlist/v1", {
-    method: "GET",
-  })
-    .then((res) => res.json())
-    .then((json) =>
-      getTransactions(req, res, json.filter(fltr), atm_list, view)
-    );
+function getAIDList(req, res) {
+  if (AID_arr.length == 0)
+    fetch("https://dev.cjpf4.net/um/api/jr/txn/aidlist/v1", {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        AID_arr = json.filter((e) => e.name != null);
+        getTransactions(req, res);
+      });
+  else getTransactions(req, res);
 }
 
-function getTransactions(req, res, AID, ATM, view) {
+function getTransactions(req, res) {
   //optional filter data
   var verify = [
     req.query.aidId,
@@ -88,7 +96,7 @@ function getTransactions(req, res, AID, ATM, view) {
     if (verify[i] == "null") verify[i] = null;
 
   //url paramaters
-  var query = {
+  query = {
     aidId: verify[0],
     atmId: verify[1],
     pan: verify[2],
@@ -103,8 +111,7 @@ function getTransactions(req, res, AID, ATM, view) {
   xhr.setRequestHeader("Accept", "application/json");
   xhr.setRequestHeader("Content-Type", "application/json");
   xhr.onreadystatechange = () => {
-    if (xhr.readyState === 4)
-      draw(res, ATM, AID, JSON.parse(xhr.responseText), query, view);
+    if (xhr.readyState === 4) draw(res, JSON.parse(xhr.responseText));
   };
 
   //query sent to API
@@ -112,11 +119,11 @@ function getTransactions(req, res, AID, ATM, view) {
 }
 
 //sending data to client
-function draw(res, atms, aids, data, query, view) {
+function draw(res, data) {
   res.render("index", {
     view: view,
-    atm_list: atms,
-    aid_list: aids,
+    atm_list: ATM_arr,
+    aid_list: AID_arr,
     dir_path: "../",
     data: data,
     query: query,

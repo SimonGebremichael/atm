@@ -59,27 +59,41 @@ function _listeners() {
   d.getElementById("aid_val").addEventListener("change", getTraansactions);
   d.getElementById("tsn").addEventListener("blur", getTraansactions);
 
-  //'not implemented' popup window. Print & Export
-  d.getElementById("data_print_btn").addEventListener("click", () =>
-    open_popup("Print")
-  );
-  d.getElementById("data_exp_btn").addEventListener("click", () =>
-    open_popup("Export")
-  );
-  function open_popup(text) {
-    d.getElementById("pop_text").innerText = text + " Not Implemented";
-    d.getElementById("popup").style.display = "block";
-    d.getElementById("popup").style.display = "block";
-    d.getElementById("main").style.filter = "blur(2px)";
-    d.getElementsByTagName("header")[0].style.filter = "blur(2px)";
-  }
-
-  //close popup window
-  d.getElementById("pop_bg").addEventListener("click", () => {
-    d.getElementById("popup").style.display = "none";
-    d.getElementById("main").style.filter = "none";
-    d.getElementsByTagName("header")[0].style.filter = "none";
+  //printing table
+  d.getElementById("data_print_btn").addEventListener("click", (data) => {
+    clearPrintingLayou(false);
+    window.print();
+    clearPrintingLayou(true);
   });
+
+  //exporting table into excel file
+  document.getElementById("data_exp_btn").addEventListener("click", (data) => {
+    document.getElementById(data.target.id).innerText = "loading...";
+    var name = "transactions" + new Date().getTime();
+    var table2excel = new Table2Excel();
+    table2excel.export(document.getElementById("transactions_tbl_data"), name);
+    setTimeout(
+      () => (document.getElementById(data.target.id).innerText = "Export"),
+      1500
+    );
+  });
+
+  //clearing elements to adjust for printing
+  function clearPrintingLayou(show) {
+    if (!show) {
+      d.getElementsByTagName("header")[0].style.display = "none";
+      d.getElementById("t_controls").style.display = "none";
+      d.getElementById("t_header").style.display = "none";
+      d.getElementById("navigation").style.display = "none";
+      d.getElementById("main").style.display = "block";
+    } else {
+      d.getElementsByTagName("header")[0].style.display = "flex";
+      d.getElementById("t_controls").style.display = "grid";
+      d.getElementById("t_header").style.display = "flex";
+      d.getElementById("main").style.display = "grid";
+      d.getElementById("navigation").style.display = "block";
+    }
+  }
 }
 
 function getTraansactions() {
@@ -131,15 +145,15 @@ function populate_transactions(match) {
 
     var date = document.createElement("td");
     var dd = formate_date(element.devTime, false, "/");
-    date.innerText = dd;
+    date.innerHTML = dd;
     filter_arr.push(dd);
 
     var atm = document.createElement("td");
-    atm.innerText = element.atmName;
+    atm.innerHTML = element.atmName;
     filter_arr.push(element.atmName.toString());
 
     var pan = document.createElement("td");
-    pan.innerText = element.pan;
+    pan.innerHTML = element.pan;
     filter_arr.push(element.pan.toString());
 
     var des = document.createElement("td");
@@ -161,7 +175,7 @@ function populate_transactions(match) {
         filter_arr.push(item.descr.toString());
       }
       if (item.code != undefined) {
-        p2.innerText = item.code;
+        p2.innerHTML = item.code;
         filter_arr.push(item.code.toString());
       }
 
@@ -177,9 +191,10 @@ function populate_transactions(match) {
 
     //show if item contains 'match' text
     if (test(filter_arr, match)) box.appendChild(cont);
+    // document.getElementById("transactions_tbl_data").appendChild(cont);
   });
 
-  //empty results animation
+  // empty results animation
   if (box.childElementCount <= 0) {
     var i = document.createElement("i");
     i.className = "far fa-folder-open fa-5x";

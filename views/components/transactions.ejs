@@ -8,8 +8,8 @@
     <!-- AID list stored -->
     <input type="hidden" value="<%= JSON.stringify(aid_list) %>" id="aid_list_storage"/> 
     
-    <table>
-        <thead>
+    <table id="transactions_tbl_data">
+        <tr>
             <th>Date</th>
             <th>ATM ID</th>
             <th>Customer PAN</th>
@@ -23,7 +23,7 @@
                     </div>
                 </div> 
             </th>
-        </thead>
+        </tr>
         <tbody id="prnt_data">
             <!-- transactions td prints here -->
         </tbody>
